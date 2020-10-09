@@ -1,3 +1,4 @@
+import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import Feed from './pages/Feed';
@@ -12,5 +13,7 @@ function Routes() {
         </Switch>
     )
 }
+
+export default Routes;
 
 // <Route path='/' component={} />
