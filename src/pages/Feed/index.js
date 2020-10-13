@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import api from '../../services/api';
+
 import './styles.css';
 
 import more from '../../assets/more.svg';
