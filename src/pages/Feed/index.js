@@ -6,7 +6,7 @@ import './styles.css';
 
 import more from '../../assets/more.svg';
 import like from '../../assets/like.svg';
-import liked from '../../assets/liked.svg';
+//import liked from '../../assets/liked.svg';
 import comment from '../../assets/comment.svg';
 import send from '../../assets/send.svg';
 
@@ -20,6 +20,18 @@ class Feed extends Component {
         const response = await api.get('posts');
 
         this.setState({ feed: response.data });
+    }
+
+    handleLike = id => {
+        api.post(`posts/${id}/like`);
+    }  
+
+    handleComment() {
+
+    }
+
+    handleSend() {
+
     }
 
     render() {
@@ -40,9 +52,17 @@ class Feed extends Component {
 
                     <footer>
                         <div className="actions">
-                            <img src={like} alt="like"/>
-                            <img src={comment} alt="comment"/>
-                            <img src={send} alt="send"/>
+                            <button type="button" onClick={() => this.handleLike(post._id)} >
+                                <img src={like} alt="like"/>
+                            </button>
+
+                            <button type="button" onClick={() => this.handleComment} >
+                                <img src={comment} alt="comment"/>
+                            </button>
+
+                            <button type="button" onClick={() => this.handleSend} >
+                                <img src={send} alt="send"/>
+                            </button>
                         </div>
 
                         <strong>{post.likes}</strong>
