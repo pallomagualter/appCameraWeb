@@ -6,25 +6,37 @@ import './styles.css';
 
 import more from '../../assets/more.svg';
 import like from '../../assets/like.svg';
+import liked from '../../assets/liked.svg';
 import comment from '../../assets/comment.svg';
 import send from '../../assets/send.svg';
 
 
 class Feed extends Component {
+    state = {
+        feed: [],
+    };
+
+    async componentDidMount() {
+        const response = await api.get('posts');
+
+        this.setState({ feed: response.data });
+    }
+
     render() {
         return (
             <section id="post-list">
-                <article>
+                { this.state.feed.map((post => (
+                    <article>
                     <header>
                         <div className="user-info">
-                            <span>Palloma Gualter</span>
-                            <span className="place">Teresina</span>
+                            <span>{post.author}</span>
+                            <span className="place">{post.place}</span>
                         </div>
 
                         <img src={more} alt="Mais" />
                     </header>
 
-                    <img src="http://localhost:3333/files/papa-1602183533610.jpg" alt="Self"/>
+                    <img src={`http://localhost:3333/files/${post.image}`} alt="image"/>
 
                     <footer>
                         <div className="actions">
@@ -33,42 +45,15 @@ class Feed extends Component {
                             <img src={send} alt="send"/>
                         </div>
 
-                        <strong>777 curtidas</strong>
+                        <strong>{post.likes}</strong>
 
                         <p>
-                            Aquela self!
-                            <span>#Fotinha #Cool #Happy #Top</span>
+                            {post.description}
+                            <span>{post.hashtags}</span>
                         </p>
                     </footer>
                 </article>
-
-                <article>
-                    <header>
-                        <div className="user-info">
-                            <span>Palloma Gualter</span>
-                            <span className="place">Teresina</span>
-                        </div>
-
-                        <img src={more} alt="Mais" />
-                    </header>
-
-                    <img src="http://localhost:3333/files/foto1-1602253901027.jpg" alt="Self"/>
-
-                    <footer>
-                        <div className="actions">
-                            <img src={like} alt="like"/>
-                            <img src={comment} alt="comment"/>
-                            <img src={send} alt="send"/>
-                        </div>
-
-                        <strong>787 curtidas</strong>
-
-                        <p>
-                            Sombra e água de coco!
-                            <span>#Praia #Sol #Happy #Top</span>
-                        </p>
-                    </footer>
-                </article>
+                )))}
             </section>
         );
     }
